@@ -20,6 +20,7 @@ class nginx::config (
     owner => $config_owner,
     group => $config_group,
     content => template("${module_name}/conf.d/${filename}.erb"),
+    require => [File[$config_log_dir], File[$config_docroot]],
   }
 
   file { 'Create log directory':

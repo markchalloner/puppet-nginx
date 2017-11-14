@@ -21,7 +21,8 @@ define nginx::vhost (
     owner => $owner,
     group => $group,
     content => template("${module_name}/vhost/vhost.conf.erb"),
-    notify => Service[$service_name]
+    notify => Service[$service_name],
+    require => File[$vhost_docroot],
   }
 
   file { "Create vhost directory ${name}":
