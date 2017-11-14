@@ -15,14 +15,12 @@ define nginx::vhost (
   $vhost_docroot = "${::nginx::config_docroot}/${name}"
 
   file { "Configure NGINX vhost ${name}":
-    ensure => 'file',
-    name => "${vhost_dir}/${priority}-${name}.conf",
+    path => "${vhost_dir}/${priority}-${name}.conf",
     mode => $mode,
     owner => $owner,
     group => $group,
     content => template("${module_name}/vhost/vhost.conf.erb"),
     notify => Service[$service_name],
-    require => File[$vhost_docroot],
   }
 
   file { "Create vhost directory ${name}":
