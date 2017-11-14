@@ -11,7 +11,18 @@ define nginx::vhost (
   String $vhost_dir = $::nginx::vhost_dir,
   String $service_name = $::nginx::service_name,
 ) {
-  file { "Configure NGINX VHost ${name}":
+
+  $vhost_docroot = "${::nginx::config_docroot}/${name}"
+
+  file { 'Create vhost directory':
+    ensure => 'directory',
+    path => $vhost_docroot,
+    mode => '0755',
+    owner => $config_owner,
+    group => $config_group,
+  }
+
+  file { "Configure NGINX vhost ${name}":
     ensure => 'file',
     name => "${vhost_dir}/${priority}-${name}.conf",
     mode => $mode,
