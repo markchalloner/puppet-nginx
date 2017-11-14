@@ -33,7 +33,7 @@ class nginx::config (
     mode => $config_mode,
     owner => $config_owner,
     group => $config_group,
-    content => template("${module_name}/${filename}.erb"),
+    content => template("${module_name}/conf.d/${filename}.erb"),
   }
 
 }
