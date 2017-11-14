@@ -23,12 +23,10 @@ class nginx::config (
     content => template("${module_name}/conf.d/${filename}.erb"),
   }
 
-  if $config_vdir_enable {
-    file { 'Create vhost config directory':
-      ensure => 'directory',
-      path => $config_vhost_dir,
-      recurse => true,
-    }
+  file { 'Create vhost config directory':
+    ensure => 'directory',
+    path => $config_vhost_dir,
+    recurse => true,
   }
 
   file { 'Create log directory':
