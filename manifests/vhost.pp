@@ -14,7 +14,7 @@ define nginx::vhost (
 
   $vhost_docroot = "${::nginx::config_docroot}/${name}"
 
-  file { 'Create vhost directory':
+  file { "Create vhost directory ${name}":
     ensure => 'directory',
     path => $vhost_docroot,
     mode => '0755',
