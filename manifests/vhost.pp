@@ -15,6 +15,7 @@ define nginx::vhost (
   $vhost_docroot = "${::nginx::config_docroot}/${name}"
 
   file { "Configure NGINX vhost ${name}":
+    ensure => 'file',
     path => "${vhost_dir}/${priority}-${name}.conf",
     mode => $mode,
     owner => $owner,

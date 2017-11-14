@@ -9,6 +9,7 @@ class nginx::config (
   String $config_pid_file = $::nginx::config_pid_file,
   Optional[String] $config_vdir_enable = $::nginx::config_vdir_enable,
   String $config_process_user = $::nginx::config_process_user,
+  String $config_vhost_dir = $::nginx::config_vhost_dir,
   String $config_docroot = $::nginx::config_docroot,
 ) {
   $filename = 'nginx.conf'
@@ -20,6 +21,14 @@ class nginx::config (
     owner => $config_owner,
     group => $config_group,
     content => template("${module_name}/conf.d/${filename}.erb"),
+  }
+
+  if $config_vdir_enable {
+    file { 'Create vhost config directory':
+      ensure => 'directory',
+      path => $config_vhost_dir,
+      recurse => true,
+    }
   }
 
   file { 'Create log directory':
