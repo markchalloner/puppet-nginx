@@ -8,7 +8,7 @@ define nginx::vhost (
   String $mode = $::nginx::config_mode,
   Optional[String] $config_vdir_enable = $::nginx::config_vdir_enable,
   String $log_dir = $::nginx::config_log_dir,
-  String $vhost_dir = $::nginx::vhost_dir,
+  String $vhost_dir = $::nginx::config_vhost_dir,
   String $service_name = $::nginx::service_name,
 ) {
 
