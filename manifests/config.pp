@@ -13,6 +13,15 @@ class nginx::config (
 ) {
   $filename = 'nginx.conf'
 
+  file { 'Configure NGINX':
+    ensure => $config_ensure,
+    path => "${config_dir}/${filename}",
+    mode => $config_mode,
+    owner => $config_owner,
+    group => $config_group,
+    content => template("${module_name}/conf.d/${filename}.erb"),
+  }
+
   file { 'Create log directory':
     ensure => 'directory',
     path => $config_log_dir,
@@ -25,15 +34,6 @@ class nginx::config (
     mode => $config_mode,
     owner => $config_owner,
     group => $config_group,
-  }
-
-  file { 'Configure NGINX':
-    ensure => $config_ensure,
-    path => "${config_dir}/${filename}",
-    mode => $config_mode,
-    owner => $config_owner,
-    group => $config_group,
-    content => template("${module_name}/conf.d/${filename}.erb"),
   }
 
 }

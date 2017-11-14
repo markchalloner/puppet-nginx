@@ -14,14 +14,6 @@ define nginx::vhost (
 
   $vhost_docroot = "${::nginx::config_docroot}/${name}"
 
-  file { "Create vhost directory ${name}":
-    ensure => 'directory',
-    path => $vhost_docroot,
-    mode => '0755',
-    owner => $config_owner,
-    group => $config_group,
-  }
-
   file { "Configure NGINX vhost ${name}":
     ensure => 'file',
     name => "${vhost_dir}/${priority}-${name}.conf",
@@ -30,5 +22,13 @@ define nginx::vhost (
     group => $group,
     content => template("${module_name}/vhost/vhost.conf.erb"),
     notify => Service[$service_name]
+  }
+
+  file { "Create vhost directory ${name}":
+    ensure => 'directory',
+    path => $vhost_docroot,
+    mode => '0755',
+    owner => $config_owner,
+    group => $config_group,
   }
 }
